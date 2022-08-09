@@ -1,21 +1,20 @@
 import getPhotoUrl from 'get-photo-url'
-import { useState } from 'react'
-// import MyPics1 from '../assets/MyPics1.jpeg'
-// import MyPics2 from '../assets/MyPics2.jpeg'
-// import image12 from '../assets/image12.png'
-// import image1 from '../assets/image1.jpg'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from '../dexie'
+
 
 
 const Gallery = () => {
-    const [allPhotos, setAllPhotos] = useState([])
+    const allPhotos = useLiveQuery(() => db.gallery.toArray(), [])
 
     const addPhoto = async () => {
-        const newPhoto = {
-            id: Date.now(),
+        db.gallery.add ({
             url: await getPhotoUrl('#addPhotoInput'),
-        }
+        })
+    }
 
-        setAllPhotos([newPhoto, ...allPhotos])
+    const removePhoto = (id) => {
+        db.gallery.delete(id)
     }
 
     return (
@@ -26,25 +25,15 @@ const Gallery = () => {
         </label>
 
         <section className='gallery'>
-            {allPhotos.map( (photo) => (
+            {!allPhotos && <div className='loader'></div>}
+            {!allPhotos?.lenght > 0 && <div className='msg'>you haven't added any image</div>}
+
+            {allPhotos?.map(photo => (
                 <div className="item" key={photo.id}>
                     <img src={photo.url} className="item-image" alt="" />
-                    <button className='delete-button'>Delete</button>
+                    <button className='delete-button' onClick={() => removePhoto(photo.id)}>Delete</button>
                 </div>
             ))}
-            
-            {/* <div className="item">
-                <img src={MyPics2} className="item-image" alt="" />
-                <button className='delete-button'>Delete</button>
-            </div>
-            <div className="item">
-                <img src={image12} className="item-image" alt="" />
-                <button className='delete-button'>Delete</button>
-            </div>
-            <div className="item">
-                <img src={image1} className="item-image" alt="" />
-                <button className='delete-button'>Delete</button>
-            </div> */}
         </section>
         </>
         
