@@ -25,10 +25,10 @@ const Gallery = () => {
         </label>
 
         <section className='gallery'>
-            {!allPhotos && <div className='loader'></div>}
-            {!allPhotos?.lenght > 0 && <div className='msg'>you haven't added any image</div>}
+            {!allPhotos && <div className='loading...'></div>}
+            {!allPhotos?.length > 0 && <div className='msg'>you haven't added any image</div>}
 
-            {allPhotos?.map(photo => (
+            {allPhotos?.map((photo) => (
                 <div className="item" key={photo.id}>
                     <img src={photo.url} className="item-image" alt="" />
                     <button className='delete-button' onClick={() => removePhoto(photo.id)}>Delete</button>

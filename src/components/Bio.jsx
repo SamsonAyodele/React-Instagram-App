@@ -34,7 +34,7 @@ const Bio = () => {
         setEditFormIsOpen(false)
     }
 
-    const updateProfliePhoto = async () => {
+    const updateProfilePhoto = async () => {
         const newProfilePhoto = await getPhotoUrl('#profilePhotoInput')
         setProfilePhoto(newProfilePhoto)
         await db.bio.put(newProfilePhoto, 'profilePhoto')
@@ -59,7 +59,7 @@ const Bio = () => {
     return (
         <section className="bio">
             <input type="file" accept='image/*' name='photo' id='profilePhotoInput' />
-            <label htmlFor="profilePhotoInput" onClick={updateProfliePhoto}>
+            <label htmlFor="profilePhotoInput" onClick={updateProfilePhoto}>
                 <div className="profile-photo" role='button' title="click to edit photo">
                     <img src={profilePhoto} alt="profile" />
                 </div>
