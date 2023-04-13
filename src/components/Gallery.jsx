@@ -8,7 +8,7 @@ const Gallery = () => {
     const allPhotos = useLiveQuery(() => db.gallery.toArray(), [])
 
     const addPhoto = async () => {
-        db.gallery.add ({
+        db.gallery.add({
             url: await getPhotoUrl('#addPhotoInput'),
         })
     }
@@ -25,7 +25,7 @@ const Gallery = () => {
         </label>
 
         <section className='gallery'>
-            {!allPhotos && <div className='loading...'></div>}
+            {!allPhotos && <p className='loading'>Loading...</p>}
             {!allPhotos?.length > 0 && <div className='msg'>you haven't added any image</div>}
 
             {allPhotos?.map((photo) => (
